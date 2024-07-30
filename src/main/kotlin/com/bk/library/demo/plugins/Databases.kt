@@ -1,13 +1,12 @@
-package com.bk.library.plugins
+package com.bk.library.demo.plugins
 
-import com.bk.library.business.demo.db.TaskTable
-import com.bk.library.business.demo.model.Task
+import com.bk.library.demo.db.TaskTable
 import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
-fun Application.configureDatabases() {
+fun Application.configureDemoDatabases() {
 //    Database.connect(
 //        "jdbc:postgresql://localhost:5432/ktor_tutorial_db",
 //        user = "postgres",

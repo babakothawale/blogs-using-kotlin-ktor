@@ -1,9 +1,9 @@
-package com.bk.library.business.demo
+package com.bk.library.demo
 
-import com.bk.library.business.demo.model.Priority
-import com.bk.library.business.demo.model.Task
-import com.bk.library.business.demo.model.tasksAsTable
-import com.bk.library.business.demo.repo.TaskRepository
+import com.bk.library.demo.model.Priority
+import com.bk.library.demo.model.Task
+import com.bk.library.demo.model.TaskRepository
+import com.bk.library.demo.model.tasksAsTable
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.application.*
@@ -22,9 +22,9 @@ fun Application.demoRoutes() {
     routing {
         staticResources("/content", "mycontent")
         staticResources("static", "static")
-        get("/") {
-            call.respondText("Hello World!")
-        }
+//        get("/") {
+//            call.respondText("Hello World!")
+//        }
         get("/books") {
             val text = "<h1>This is book list</h1>"
             val contentType = ContentType.parse("text/html")
@@ -43,10 +43,10 @@ fun Application.taskHtmlRoutes() {
             get {
                 call.respondText(
                     contentType = ContentType.parse("text/html"),
-                    text = TaskRepository.allTasks().tasksAsTable()
+                    text = com.bk.library.demo.repo.TaskRepository.allTasks().tasksAsTable()
                 )
 
-                val tasks = TaskRepository.allTasks()
+                val tasks = com.bk.library.demo.repo.TaskRepository.allTasks()
                 call.respond(tasks)
             }
             post {
@@ -64,7 +64,7 @@ fun Application.taskHtmlRoutes() {
 
                 try {
                     val priority = Priority.valueOf(params.third)
-                    TaskRepository.addTask(
+                    com.bk.library.demo.repo.TaskRepository.addTask(
                         Task(
                             params.first,
                             params.second,
@@ -86,7 +86,7 @@ fun Application.taskHtmlRoutes() {
                 }
                 try {
                     val priority = Priority.valueOf(priorityAsText)
-                    val tasks = TaskRepository.tasksByPriority(priority)
+                    val tasks = com.bk.library.demo.repo.TaskRepository.tasksByPriority(priority)
 
                     if (tasks.isEmpty()) {
                         call.respond(HttpStatusCode.NotFound)
@@ -108,7 +108,7 @@ fun Application.taskHtmlRoutes() {
                     return@get
                 }
 
-                val task = TaskRepository.taskByName(name)
+                val task = com.bk.library.demo.repo.TaskRepository.taskByName(name)
                 if (task == null) {
                     call.respond(HttpStatusCode.NotFound)
                     return@get
@@ -126,7 +126,7 @@ fun Application.taskHtmlRoutes() {
                     return@delete
                 }
 
-                if (TaskRepository.removeTask(name)) {
+                if (com.bk.library.demo.repo.TaskRepository.removeTask(name)) {
                     call.respond(HttpStatusCode.NoContent)
                 } else {
                     call.respond(HttpStatusCode.NotFound)
@@ -141,13 +141,13 @@ fun Application.taskRoutesREST() {
         staticResources("/task-ui", "task-ui")
         route("/rest/tasks") {
             get {
-                val tasks = TaskRepository.allTasks()
+                val tasks = com.bk.library.demo.repo.TaskRepository.allTasks()
                 call.respond(tasks)
             }
             post {
                 try {
                     val task = call.receive<Task>()
-                    TaskRepository.addTask(task)
+                    com.bk.library.demo.repo.TaskRepository.addTask(task)
                     call.respond(HttpStatusCode.NoContent)
                 } catch (ex: IllegalArgumentException) {
                     call.respond(HttpStatusCode.BadRequest)
@@ -163,7 +163,7 @@ fun Application.taskRoutesREST() {
                 }
                 try {
                     val priority = Priority.valueOf(priorityAsText)
-                    val tasks = TaskRepository.tasksByPriority(priority)
+                    val tasks = com.bk.library.demo.repo.TaskRepository.tasksByPriority(priority)
 
                     if (tasks.isEmpty()) {
                         call.respond(HttpStatusCode.NotFound)
@@ -181,7 +181,7 @@ fun Application.taskRoutesREST() {
                     return@get
                 }
 
-                val task = TaskRepository.taskByName(name)
+                val task = com.bk.library.demo.repo.TaskRepository.taskByName(name)
                 if (task == null) {
                     call.respond(HttpStatusCode.NotFound)
                     return@get
@@ -195,7 +195,7 @@ fun Application.taskRoutesREST() {
                     return@delete
                 }
 
-                if (TaskRepository.removeTask(name)) {
+                if (com.bk.library.demo.repo.TaskRepository.removeTask(name)) {
                     call.respond(HttpStatusCode.NoContent)
                 } else {
                     call.respond(HttpStatusCode.NotFound)
@@ -223,7 +223,7 @@ fun Application.templateRoutes() {
                     call.respond(HttpStatusCode.BadRequest)
                     return@get
                 }
-                val task = TaskRepository.taskByName(name)
+                val task = com.bk.library.demo.repo.TaskRepository.taskByName(name)
                 if (task == null) {
                     call.respond(HttpStatusCode.NotFound)
                     return@get
@@ -240,7 +240,7 @@ fun Application.templateRoutes() {
                 }
                 try {
                     val priority = Priority.valueOf(priorityAsText)
-                    val tasks = TaskRepository.tasksByPriority(priority)
+                    val tasks = com.bk.library.demo.repo.TaskRepository.tasksByPriority(priority)
 
 
                     if (tasks.isEmpty()) {
@@ -270,14 +270,14 @@ fun Application.templateRoutes() {
                 }
                 try {
                     val priority = Priority.valueOf(params.third)
-                    TaskRepository.addTask(
+                    com.bk.library.demo.repo.TaskRepository.addTask(
                         Task(
                             params.first,
                             params.second,
                             priority
                         )
                     )
-                    val tasks = TaskRepository.allTasks()
+                    val tasks = com.bk.library.demo.repo.TaskRepository.allTasks()
                     call.respond(
                         ThymeleafContent("all-tasks", mapOf("tasks" to tasks))
                     )
@@ -314,7 +314,7 @@ fun Application.socketRoutes() {
 
             while (true) {
                 val newTask = receiveDeserialized<Task>()
-                TaskRepository.addTask(newTask)
+                com.bk.library.demo.repo.TaskRepository.addTask(newTask)
                 for (session in sessions) {
                     session.sendSerialized(newTask)
                 }
@@ -324,13 +324,13 @@ fun Application.socketRoutes() {
 }
 
 private suspend fun DefaultWebSocketServerSession.sendAllTasks() {
-    for (task in TaskRepository.allTasks()) {
+    for (task in com.bk.library.demo.repo.TaskRepository.allTasks()) {
         sendSerialized(task)
         delay(1000)
     }
 }
 
-fun Application.dbRouting(repository: com.bk.library.business.demo.model.TaskRepository) {
+fun Application.dbRouting(repository: TaskRepository) {
     routing {
         route("/db/tasks") {
             get {

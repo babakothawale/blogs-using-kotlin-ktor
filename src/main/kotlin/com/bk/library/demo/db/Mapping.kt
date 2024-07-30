@@ -1,7 +1,7 @@
-package com.bk.library.business.demo.db
+package com.bk.library.demo.db
 
-import com.bk.library.business.demo.model.Priority
-import com.bk.library.business.demo.model.Task
+import com.bk.library.demo.model.Priority
+import com.bk.library.demo.model.Task
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -23,10 +23,6 @@ class TaskDAO(id: EntityID<Int>) : IntEntity(id) {
     var description by TaskTable.description
     var priority by TaskTable.priority
 }
-
-suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
-    newSuspendedTransaction(Dispatchers.IO, statement = block)
-
 
 fun daoToModel(dao: TaskDAO) = Task(
     dao.name,

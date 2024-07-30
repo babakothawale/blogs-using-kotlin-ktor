@@ -29,12 +29,12 @@
         }
 
         function deleteTaskWithName(name) {
-            return sendDELETE(`/tasks/${name}`)
+            return sendDELETE(`/db/tasks/${name}`)
         }
 
         function addNewTask() {
             const task = buildTaskFromForm();
-            sendPOST("/tasks", task).then(displayAllTasks);
+            sendPOST("/db/tasks", task).then(displayAllTasks);
         }
 
         function buildTaskFromForm() {
@@ -58,15 +58,15 @@
         }
 
         function fetchTasksWithPriority(priority) {
-            return sendGET(`/tasks/byPriority/${priority}`);
+            return sendGET(`/db/tasks/byPriority/${priority}`);
         }
 
         function fetchTaskWithName(name) {
-            return sendGET(`/tasks/byName/${name}`);
+            return sendGET(`/db/tasks/byName/${name}`);
         }
 
         function fetchAllTasks() {
-            return sendGET("/tasks")
+            return sendGET("/db/tasks")
         }
 
         function sendGET(url) {

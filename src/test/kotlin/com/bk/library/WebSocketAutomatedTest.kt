@@ -1,9 +1,9 @@
 package com.bk.library
 
 
-import com.bk.library.business.demo.model.Priority
-import com.bk.library.business.demo.model.Task
-import com.bk.library.plugins.configureRouting
+import com.bk.library.demo.model.Priority
+import com.bk.library.demo.model.Task
+import com.bk.library.plugins.configureDemoRouting
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.serialization.*
@@ -18,7 +18,7 @@ class WebSocketAutomatedTest {
     @Test
     fun testRoot() = testApplication {
         application {
-            configureRouting(FakeTaskRepository())
+            configureDemoRouting(FakeTaskRepository())
 //            configureSerialization()
 //            configureSockets()
         }

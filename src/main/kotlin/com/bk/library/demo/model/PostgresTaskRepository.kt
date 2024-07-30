@@ -1,9 +1,9 @@
-package com.bk.library.business.demo.model
+package com.bk.library.demo.model
 
-import com.bk.library.business.demo.db.TaskDAO
-import com.bk.library.business.demo.db.TaskTable
-import com.bk.library.business.demo.db.daoToModel
-import com.bk.library.business.demo.db.suspendTransaction
+import com.bk.library.api.suspendTransaction
+import com.bk.library.demo.db.TaskDAO
+import com.bk.library.demo.db.TaskTable
+import com.bk.library.demo.db.daoToModel
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 

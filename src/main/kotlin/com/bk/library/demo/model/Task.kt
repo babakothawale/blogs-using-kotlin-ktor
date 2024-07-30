@@ -1,4 +1,4 @@
-package com.bk.library.business.demo.model
+package com.bk.library.demo.model
 
 import kotlinx.serialization.Serializable
 

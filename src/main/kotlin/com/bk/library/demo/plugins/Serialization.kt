@@ -1,10 +1,10 @@
-package com.bk.library.plugins
+package com.bk.library.demo.plugins
 
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
 
-fun Application.configureSerialization() {
+fun Application.configureDemoSerialization() {
     install(ContentNegotiation) {
         json()
     }

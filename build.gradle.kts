@@ -14,8 +14,8 @@ version = "0.0.1"
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
 
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+//    val isDevelopment: Boolean = project.ext.has("development")
+//    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
 repositories {
@@ -26,6 +26,12 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("io.ktor:ktor-server-status-pages")
+
+    implementation("io.ktor:ktor-server-request-validation")
+
+    implementation("io.ktor:ktor-server-default-headers")
+    implementation("io.ktor:ktor-server-compression")
+    implementation("io.ktor:ktor-server-caching-headers")
 
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
@@ -41,6 +47,11 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-core:0.41.1")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.41.1")
     implementation("org.jetbrains.exposed:exposed-dao:0.41.1")
+
+    implementation("io.ktor:ktor-server-html-builder:2.3.12")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-css:1.0.0-pre.625")
+
+    implementation("io.ktor:ktor-server-auth")
 
 
     testImplementation("io.ktor:ktor-client-content-negotiation")

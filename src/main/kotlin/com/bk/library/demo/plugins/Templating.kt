@@ -1,10 +1,10 @@
-package com.bk.library.plugins
+package com.bk.library.demo.plugins
 
 import io.ktor.server.application.*
 import io.ktor.server.thymeleaf.*
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver
 
-fun Application.configureTemplating() {
+fun Application.configureDemoTemplating() {
     install(Thymeleaf) {
         setTemplateResolver(ClassLoaderTemplateResolver().apply {
             prefix = "templates/thymeleaf/"

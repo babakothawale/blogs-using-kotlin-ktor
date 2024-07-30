@@ -1,8 +1,8 @@
 package com.bk.library
 
-import com.bk.library.business.demo.model.Priority
-import com.bk.library.business.demo.model.Task
-import com.bk.library.business.demo.model.TaskRepository
+import com.bk.library.demo.model.Priority
+import com.bk.library.demo.model.Task
+import com.bk.library.demo.model.TaskRepository
 
 class FakeTaskRepository : TaskRepository {
     private val tasks = mutableListOf(

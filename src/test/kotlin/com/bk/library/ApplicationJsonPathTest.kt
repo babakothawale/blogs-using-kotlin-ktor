@@ -1,7 +1,7 @@
 package com.bk.library
 
 
-import com.bk.library.business.demo.model.Priority
+import com.bk.library.demo.model.Priority
 import com.jayway.jsonpath.DocumentContext
 import com.jayway.jsonpath.JsonPath
 import io.ktor.client.*

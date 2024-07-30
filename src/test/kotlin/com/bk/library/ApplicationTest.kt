@@ -1,7 +1,7 @@
 package com.bk.library
 
-import com.bk.library.business.demo.model.Priority
-import com.bk.library.business.demo.model.Task
+import com.bk.library.demo.model.Priority
+import com.bk.library.demo.model.Task
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.plugins.contentnegotiation.*

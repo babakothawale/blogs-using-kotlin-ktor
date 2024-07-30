@@ -1,7 +1,7 @@
-package com.bk.library.business.demo.repo
+package com.bk.library.demo.repo
 
-import com.bk.library.business.demo.model.Priority
-import com.bk.library.business.demo.model.Task
+import com.bk.library.demo.model.Priority
+import com.bk.library.demo.model.Task
 
 
 object TaskRepository {

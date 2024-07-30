@@ -1,15 +1,13 @@
 package com.bk.library
 
-import com.bk.library.business.demo.model.Priority
-import com.bk.library.business.demo.model.Task
-import com.bk.library.plugins.configureRouting
-import com.bk.library.plugins.configureSerialization
+import com.bk.library.demo.model.Priority
+import com.bk.library.demo.model.Task
+import com.bk.library.plugins.configureDemoRouting
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.json
-import io.ktor.server.application.*
 import io.ktor.server.testing.*
 import kotlin.test.*
 
@@ -18,8 +16,8 @@ class DbApplicationTest {
     fun tasksCanBeFoundByPriority() = testApplication {
         application {
             val repository = FakeTaskRepository()
-            configureSerialization()
-            configureRouting(repository)
+            com.bk.library.api.demo.plugins.configureSerialization()
+            configureDemoRouting(repository)
         }
 
         val client = createClient {
@@ -47,9 +45,9 @@ class DbApplicationTest {
     @Test
     fun unusedPriorityProduces404() = testApplication {
         application {
-            configureSerialization()
+            com.bk.library.api.demo.plugins.configureSerialization()
             val repository = FakeTaskRepository()
-            configureRouting(repository)
+            configureDemoRouting(repository)
         }
         val response = client.get("/db/tasks/byPriority/Vital")
         assertEquals(HttpStatusCode.NotFound, response.status)
@@ -58,9 +56,9 @@ class DbApplicationTest {
     @Test
     fun newTasksCanBeAdded() = testApplication {
         application {
-            configureSerialization()
+            com.bk.library.api.demo.plugins.configureSerialization()
             val repository = FakeTaskRepository()
-            configureRouting(repository)
+            configureDemoRouting(repository)
         }
         val client = createClient {
             install(ContentNegotiation) {

@@ -6478,3 +6478,12 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: /Users/babasaheb
 	at org.h2.mvstore.FileStore.open(FileStore.java:128)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:452)
 	... 72 more
+2024-07-29 12:28:34 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "BLOG" not found; SQL statement:
+SELECT BLOG.ID, BLOG."userId", BLOG.TITLE, BLOG.DESCRIPTION, BLOG.CREATED, BLOG.UPDATED FROM BLOG [42102-214]
+2024-07-29 12:28:35 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "BLOG" not found; SQL statement:
+SELECT BLOG.ID, BLOG."userId", BLOG.TITLE, BLOG.DESCRIPTION, BLOG.CREATED, BLOG.UPDATED FROM BLOG [42102-214]
+2024-07-29 19:07:02 jdbc[7]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SESSION" not found; SQL statement:
+INSERT INTO "SESSION" (CREATED, TILL, TOKEN, UPDATED, USERNAME) VALUES (?, ?, ?, ?, ?) [42102-214]

@@ -1,4 +1,4 @@
-package com.bk.library.plugins
+package com.bk.library.demo.plugins
 
 import io.ktor.serialization.kotlinx.*
 import io.ktor.server.application.*
@@ -7,7 +7,7 @@ import kotlinx.serialization.json.Json
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
-fun Application.configureSockets() {
+fun Application.configureDemoSockets() {
     install(WebSockets) {
         contentConverter = KotlinxWebsocketSerializationConverter(Json)
         pingPeriod = 15.seconds.toJavaDuration() //Duration.ofSeconds(15)
