@@ -6,7 +6,7 @@ import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
 
-object UserTable : LongIdTable("user") {
+internal object UserTable : LongIdTable("user") {
     val username = varchar("username", 50)
     val pass = varchar("pass", 50)
     val email = varchar("email", 50)
@@ -15,7 +15,7 @@ object UserTable : LongIdTable("user") {
     val updated = long("updated")
 }
 
-class UserDAO(id: EntityID<Long>) : LongEntity(id) {
+internal class UserDAO(id: EntityID<Long>) : LongEntity(id) {
     companion object : LongEntityClass<UserDAO>(UserTable)
     var username by UserTable.username
     var pass by UserTable.pass
@@ -26,12 +26,12 @@ class UserDAO(id: EntityID<Long>) : LongEntity(id) {
 }
 
 
-fun daoToModel(dao: UserDAO) = User(
+internal fun daoToModel(dao: UserDAO) = User(
     username = dao.username,
     email = dao.email,
     google = dao.google
 )
 
-fun UserDAO.toUser(): User {
+internal fun UserDAO.toUser(): User {
     return daoToModel(this)
 }

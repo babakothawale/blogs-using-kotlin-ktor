@@ -5,7 +5,7 @@ import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
 
-object SessionTable : LongIdTable("session") {
+internal object SessionTable : LongIdTable("session") {
     val username = varchar("username", 50)
     val token = varchar("token", 255)
     val validTill = long("till")
@@ -13,7 +13,7 @@ object SessionTable : LongIdTable("session") {
     val updated = long("updated")
 }
 
-class SessionDAO(id: EntityID<Long>) : LongEntity(id) {
+internal class SessionDAO(id: EntityID<Long>) : LongEntity(id) {
     companion object : LongEntityClass<SessionDAO>(SessionTable)
 
     var username by SessionTable.username

@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.update
 
-class BlogRepositoryImpl : BlogRepository {
+internal class BlogRepositoryImpl : BlogRepository {
     override suspend fun saveBlog(userId: String, title:String, description: String): Blog = suspendTransaction {
         BlogDAO.new {
             this.userId = userId

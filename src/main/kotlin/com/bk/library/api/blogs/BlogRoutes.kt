@@ -11,7 +11,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 
-fun Route.blogApiRoutes(blogService: BlogService) {
+internal fun Route.blogApiRoutes(blogService: BlogService) {
     authenticate("auth-bearer") {
         route("/api/blog") {
             get {

@@ -2,7 +2,7 @@ package com.bk.library.api.blogs.service
 
 import com.bk.library.api.blogs.model.Blog
 
-interface BlogRepository {
+internal interface BlogRepository {
     suspend fun saveBlog(userId: String, title: String, description:String): Blog
     suspend fun updateBlog(blog: Blog)
 

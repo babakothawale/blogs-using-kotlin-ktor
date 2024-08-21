@@ -4,7 +4,7 @@ import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
-fun Application.configureBlogDatabase() {
+internal fun Application.configureBlogDatabase() {
 //    Database.connect(
 //        "jdbc:postgresql://localhost:5432/ktor_tutorial_db",
 //        user = "postgres",

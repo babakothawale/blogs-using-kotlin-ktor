@@ -3,7 +3,7 @@ package com.bk.library.api.identity.service
 import com.bk.library.api.identity.model.*
 
 internal class LoginService(private val userRepository: UserRepository, private val session: SessionRepository) {
-    suspend fun register(request: RegisterUserRequest): RegisterUserResponse {
+    internal suspend fun register(request: RegisterUserRequest): RegisterUserResponse {
         return try {
             val id = userRepository.register(User(request.username, request.email, false), request.password)
             if (id > 0) {
@@ -17,7 +17,7 @@ internal class LoginService(private val userRepository: UserRepository, private 
         }
     }
 
-    suspend fun login(request: LoginRequest): LoginResponse {
+    internal suspend fun login(request: LoginRequest): LoginResponse {
         return try {
             var token = session.getSession(username = request.username)
             if (token == null) {

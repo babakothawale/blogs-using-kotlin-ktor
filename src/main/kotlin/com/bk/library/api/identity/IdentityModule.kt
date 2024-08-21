@@ -6,14 +6,6 @@ import com.bk.library.api.identity.service.SessionRepositoryImpl
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.routing.*
-import io.ktor.util.*
-
-private val digestFunction = getDigestFunction("SHA-256") { "ktor${it.length}" }
-private val hashedUserTable = UserHashedTableAuth(
-    table = mapOf(
-        "admin" to digestFunction("admin-pass"), "user1" to digestFunction("user1-pass")
-    ), digester = digestFunction
-)
 
 internal fun Application.identityModule() {
     val sessionValidity: Long =

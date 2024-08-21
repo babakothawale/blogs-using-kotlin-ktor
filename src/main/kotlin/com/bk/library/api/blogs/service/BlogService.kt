@@ -3,7 +3,7 @@ package com.bk.library.api.blogs.service
 import com.bk.library.api.blogs.model.Blog
 import com.bk.library.api.blogs.model.BlogRequest
 
-class BlogService(private val blogRepository: BlogRepository) {
+internal class BlogService(private val blogRepository: BlogRepository) {
 
     suspend fun getAllBlogs(): List<Blog> {
         return blogRepository.getAllBlogs()

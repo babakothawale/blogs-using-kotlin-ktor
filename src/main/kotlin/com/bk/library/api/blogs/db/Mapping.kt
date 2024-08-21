@@ -6,15 +6,15 @@ import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
 
-object BlogTable : LongIdTable("blog") {
+internal object BlogTable : LongIdTable("blog") {
     val userId = varchar("userId", 50)
     val title = varchar("title", 50)
-    val description = varchar("description", 50)
+    val description = varchar("description", 1048)
     val created = long("created")
     val updated = long("updated")
 }
 
-class BlogDAO(id: EntityID<Long>) : LongEntity(id) {
+internal class BlogDAO(id: EntityID<Long>) : LongEntity(id) {
     companion object : LongEntityClass<BlogDAO>(BlogTable)
 
     var userId by BlogTable.userId
@@ -24,7 +24,7 @@ class BlogDAO(id: EntityID<Long>) : LongEntity(id) {
     var updated by BlogTable.updated
 }
 
-fun daoToModel(dao: BlogDAO) = Blog(
+internal fun daoToModel(dao: BlogDAO) = Blog(
     blogId = dao.id.value,
     userId = dao.userId,
     title = dao.title,
@@ -33,6 +33,6 @@ fun daoToModel(dao: BlogDAO) = Blog(
     updated = dao.updated
 )
 
-fun BlogDAO.toBlogModel(): Blog {
+internal fun BlogDAO.toBlogModel(): Blog {
     return daoToModel(this)
 }

@@ -8,10 +8,10 @@ import kotlinx.css.CssBuilder
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
-suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
+internal suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
     newSuspendedTransaction(Dispatchers.IO, statement = block)
 
 
-suspend inline fun ApplicationCall.respondCss(builder: CssBuilder.() -> Unit) {
+internal suspend inline fun ApplicationCall.respondCss(builder: CssBuilder.() -> Unit) {
     this.respondText(CssBuilder().apply(builder).toString(), ContentType.Text.CSS)
 }
