@@ -5,6 +5,7 @@ import com.bk.library.api.identity.service.*
 import com.bk.library.api.identity.service.SessionRepositoryImpl
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
+import io.ktor.server.plugins.ratelimit.*
 import io.ktor.server.routing.*
 
 internal fun Application.identityModule() {
@@ -27,8 +28,8 @@ internal fun Application.identityModule() {
         }
     }
     routing {
-        identityApiRoutes(LoginService(UserRepositoryImpl(), session))
-        identityAppRoutes()
+        rateLimit(RateLimitName("critical")) {
+            identityApiRoutes(LoginService(UserRepositoryImpl(), session))
+        }
     }
-
 }

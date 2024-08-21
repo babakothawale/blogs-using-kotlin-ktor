@@ -38,20 +38,22 @@ dependencies {
     implementation("io.ktor:ktor-server-host-common-jvm")
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
-    implementation("io.ktor:ktor-server-thymeleaf-jvm")
+//    implementation("io.ktor:ktor-server-thymeleaf-jvm")
 
-    implementation("io.ktor:ktor-server-websockets-jvm")
+//    implementation("io.ktor:ktor-server-websockets-jvm")
 
-    implementation("org.postgresql:postgresql:42.7.2")
+//    implementation("org.postgresql:postgresql:42.7.2")
     implementation("com.h2database:h2:2.1.214")
     implementation("org.jetbrains.exposed:exposed-core:0.41.1")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.41.1")
     implementation("org.jetbrains.exposed:exposed-dao:0.41.1")
 
-    implementation("io.ktor:ktor-server-html-builder:2.3.12")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-css:1.0.0-pre.625")
+//    implementation("io.ktor:ktor-server-html-builder:2.3.12")
+//    implementation("org.jetbrains.kotlin-wrappers:kotlin-css:1.0.0-pre.625")
 
     implementation("io.ktor:ktor-server-auth")
+
+    implementation("io.ktor:ktor-server-rate-limit:2.3.12")
 
 
     testImplementation("io.ktor:ktor-client-content-negotiation")
@@ -62,6 +64,8 @@ dependencies {
 
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
+
+
 
 
 }

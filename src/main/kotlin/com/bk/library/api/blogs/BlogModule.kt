@@ -4,11 +4,14 @@ import com.bk.library.api.blogs.db.configureBlogDatabase
 import com.bk.library.api.blogs.service.BlogRepositoryImpl
 import com.bk.library.api.blogs.service.BlogService
 import io.ktor.server.application.*
+import io.ktor.server.plugins.ratelimit.*
 import io.ktor.server.routing.*
 
-fun Application.blogModule() {
+internal fun Application.blogModule() {
     configureBlogDatabase()
     routing {
-        blogApiRoutes(BlogService(BlogRepositoryImpl()))
+        rateLimit(RateLimitName("protected")) {
+            blogApiRoutes(BlogService(BlogRepositoryImpl()))
+        }
     }
 }
