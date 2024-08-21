@@ -1,6 +1,6 @@
 package com.bk.library.api.blogs
 
-import com.bk.library.api.blogs.model.Blog
+import com.bk.library.api.blogs.model.BlogRequest
 import com.bk.library.api.blogs.model.BlogResponse
 import com.bk.library.api.blogs.service.BlogService
 import io.ktor.http.*
@@ -33,11 +33,16 @@ fun Route.blogApiRoutes(blogService: BlogService) {
 
             post {
                 try {
-                    val blogRequest = call.receive<Blog>()
+                    val userId = call.principal<UserIdPrincipal>()?.name
+                    if (userId.isNullOrEmpty()) {
+                        call.respond(HttpStatusCode.BadRequest, "Unauthorised")
+                    }
+                    val blogRequest = call.receive<BlogRequest>()
                     if (blogRequest.isEmpty()) {
                         call.respond(HttpStatusCode.BadRequest, "Blog has no data")
                     } else {
-                        val blogRes = blogService.saveBlog(blogRequest)
+
+                        val blogRes = blogService.saveBlog(userId = userId!!, blogRequest)
                         call.respond(HttpStatusCode.OK, blogRes)
                     }
                 } catch (ex: IllegalArgumentException) {

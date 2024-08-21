@@ -16,9 +16,10 @@ private val hashedUserTable = UserHashedTableAuth(
 )
 
 internal fun Application.identityModule() {
-    val sessionValidity: Long? =
-        environment.config.property("ktor.application.session_validity").getString().toLongOrNull()
-    val session = SessionRepositoryImpl(sessionValidity ?: 60000)
+    val sessionValidity: Long =
+        environment.config.property("ktor.application.session_validity").getString().toLongOrNull() ?: 1440
+
+    val session = SessionRepositoryImpl((sessionValidity * 60000))
     configureUserDatabase()
     install(Authentication) {
         bearer("auth-bearer") {

@@ -1,6 +1,7 @@
 package com.bk.library.api.blogs.service
 
 import com.bk.library.api.blogs.model.Blog
+import com.bk.library.api.blogs.model.BlogRequest
 
 class BlogService(private val blogRepository: BlogRepository) {
 
@@ -12,12 +13,16 @@ class BlogService(private val blogRepository: BlogRepository) {
         return blogRepository.getBlog(id)
     }
 
-    suspend fun saveBlog(blogRequest: Blog): Blog {
-        return if (blogRequest.blogId > 0) {
-            blogRepository.updateBlog(blogRequest)
-            blogRepository.getBlog(blogRequest.blogId)!!
+    suspend fun saveBlog(userId: String, blogRequest: BlogRequest): Blog {
+        return if (blogRequest.blogData.blogId > 0) {
+//            blogRepository.updateBlog(newBlog)
+            blogRepository.getBlog(blogRequest.blogData.blogId)!!
         } else {
-            blogRepository.saveBlog(blogRequest)
+            blogRepository.saveBlog(
+                userId,
+                title = blogRequest.blogData.title,
+                description = blogRequest.blogData.description
+            )
         }
     }
 

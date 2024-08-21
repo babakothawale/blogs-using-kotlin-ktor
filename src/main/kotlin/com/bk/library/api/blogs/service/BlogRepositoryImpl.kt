@@ -11,11 +11,11 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.update
 
 class BlogRepositoryImpl : BlogRepository {
-    override suspend fun saveBlog(blog: Blog): Blog = suspendTransaction {
+    override suspend fun saveBlog(userId: String, title:String, description: String): Blog = suspendTransaction {
         BlogDAO.new {
-            userId = blog.userId
-            title = blog.title
-            description = blog.description
+            this.userId = userId
+            this.title = title
+            this.description = description
             created = System.currentTimeMillis()
             updated = created
         }.toBlogModel()
