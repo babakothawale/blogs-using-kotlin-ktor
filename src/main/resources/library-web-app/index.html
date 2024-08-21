@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A Simple SPA For Blog</title>
+    <script type="application/javascript">
+        function displayAllBlogs() {
+            clearBlogsTable();
+            fetchAllBlogs().then(displayBlogs)
+        }
+
+        function displayBlogsWithPriority() {
+            clearBlogsTable();
+            const priority = readBlogPriority();
+            fetchBlogsWithPriority(priority).then(displayBlogs)
+        }
+
+        function displayBlog(name) {
+            fetchBlogWithName(name).then(t =>
+                blogDisplay().innerHTML
+                    = `${t.priority} priority blog ${t.name} with description "${t.description}"`
+            )
+        }
+
+        function deleteBlog(name) {
+            deleteBlogWithName(name).then(() => {
+                clearBlogDisplay();
+                displayAllBlogs();
+            })
+        }
+
+        function deleteBlogWithName(name) {
+            return sendDELETE(`/api/blog/${name}`)
+        }
+
+        function addNewBlog() {
+            const blog = buildBlogFromForm();
+            sendPOST("/api/blog", blog).then(displayAllBlogs);
+        }
+
+        function buildBlogFromForm() {
+            return {
+                name: getBlogFormValue("newBlogName"),
+                description: getBlogFormValue("newBlogDescription"),
+                priority: getBlogFormValue("newBlogPriority")
+            }
+        }
+
+        function getBlogFormValue(controlName) {
+            return document.addBlogForm[controlName].value;
+        }
+
+        function blogDisplay() {
+            return document.getElementById("currentBlogDisplay");
+        }
+
+        function readBlogPriority() {
+            return document.priorityForm.priority.value
+        }
+
+        function fetchBlogsWithPriority(priority) {
+            return sendGET(`/api/blog/byPriority/${priority}`);
+        }
+
+        function fetchBlogWithName(name) {
+            return sendGET(`/api/blog/byName/${name}`);
+        }
+
+        function fetchAllBlogs() {
+            return sendGET("/api/blog")
+        }
+
+        function sendGET(url) {
+            return fetch(
+                url,
+                {headers: {'Accept': 'application/json'}}
+            ).then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                return [];
+            });
+        }
+
+        function sendPOST(url, data) {
+            return fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+        }
+
+        function sendDELETE(url) {
+            return fetch(url, {
+                method: "DELETE"
+            });
+        }
+
+        function blogsTable() {
+            return document.getElementById("blogsTableBody");
+        }
+
+        function clearBlogsTable() {
+            blogsTable().innerHTML = "";
+        }
+
+        function clearBlogDisplay() {
+            blogDisplay().innerText = "None";
+        }
+
+        function displayBlogs(blogs) {
+            const blogsTableBody = blogsTable()
+            blogs.forEach(blog => {
+                const newRow = blogRow(blog);
+                blogsTableBody.appendChild(newRow);
+            });
+        }
+
+        function blogRow(blog) {
+            return tr([
+                td(blog.name),
+                td(blog.priority),
+                td(viewLink(blog.name)),
+                td(deleteLink(blog.name)),
+            ]);
+        }
+
+        function tr(children) {
+            const node = document.createElement("tr");
+            children.forEach(child => node.appendChild(child));
+            return node;
+        }
+
+        function td(content) {
+            const node = document.createElement("td");
+            if (content instanceof Element) {
+                node.appendChild(content)
+            } else {
+                node.appendChild(document.createTextNode(content));
+            }
+            return node;
+        }
+
+        function viewLink(blogName) {
+            const node = document.createElement("a");
+            node.setAttribute(
+                "href", `javascript:displayBlog("${blogName}")`
+            )
+            node.appendChild(document.createTextNode("view"));
+            return node;
+        }
+
+        function deleteLink(blogName) {
+            const node = document.createElement("a");
+            node.setAttribute(
+                "href", `javascript:deleteBlog("${blogName}")`
+            )
+            node.appendChild(document.createTextNode("delete"));
+            return node;
+        }
+    </script>
+</head>
+<body onload="displayAllBlogs()">
+<h1>Blog Manager Client</h1>
+<form action="javascript:displayAllBlogs()">
+    <span>View all the blogs</span>
+    <input type="submit" value="Go">
+</form>
+<form name="priorityForm" action="javascript:displayBlogsWithPriority()">
+    <span>View blogs with priority</span>
+    <select name="priority">
+        <option name="Low">Low</option>
+        <option name="Medium">Medium</option>
+        <option name="High">High</option>
+        <option name="Vital">Vital</option>
+    </select>
+    <input type="submit" value="Go">
+</form>
+<form name="addBlogForm" action="javascript:addNewBlog()">
+    <span>Create new blog with</span>
+    <label for="newBlogName">name</label>
+    <input type="text" id="newBlogName" name="newBlogName" size="10">
+    <label for="newBlogDescription">description</label>
+    <input type="text" id="newBlogDescription" name="newBlogDescription" size="20">
+    <label for="newBlogPriority">priority</label>
+    <select id="newBlogPriority" name="newBlogPriority">
+        <option name="Low">Low</option>
+        <option name="Medium">Medium</option>
+        <option name="High">High</option>
+        <option name="Vital">Vital</option>
+    </select>
+    <input type="submit" value="Go">
+</form>
+<hr>
+<div>
+    Current blog is <em id="currentBlogDisplay">None</em>
+</div>
+<hr>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Priority</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody id="blogsTableBody">
+    </tbody>
+</table>
+</body>
+</html>
